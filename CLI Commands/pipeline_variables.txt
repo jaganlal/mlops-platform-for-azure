@@ -1,0 +1,5 @@
+ml.experimentName = simple_iris_model
+system.collectionId = e9a
+system.debug = false
+system.definitionId = 1
+system.teamProject = simple_mlops_demo
