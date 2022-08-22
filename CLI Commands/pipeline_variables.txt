@@ -1,5 +1,5 @@
-ml.experimentName = simple_iris_model
-system.collectionId = e9a
+ml.experimentName = simple_iris_model_classification_experiment
+system.collectionId = fc55bcaf-df86-4512-a208-9056427b106a
 system.debug = false
 system.definitionId = 1
-system.teamProject = simple_mlops_demo
+system.teamProject = simple-mlops-demo

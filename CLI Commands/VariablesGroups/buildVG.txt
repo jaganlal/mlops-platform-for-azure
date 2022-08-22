@@ -1,8 +1,8 @@
 ml.computeIdleSecs = 300
 ml.computeMaxNodes = 1
 ml.computeMinNodes = 0
-ml.computeName = simple_mlops_demo_for_iris
-ml.computeVMSize = STANDARD_DS2_V2
-ml.region = eastus
+ml.computeName = simple-mlops-demo-for-iris
+ml.computeVMSize = STANDARD_A1_V2
+ml.region = centralus
 ml.resourceGroup = RG_Jaganlal
 ml.workspace = simple_mlops_demo_workspace
