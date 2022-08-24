@@ -1,8 +1,8 @@
-Use Python 3.6
+Use Python 3.8
 ---------------
 Install Requirements
 --------------------
-$(System.DefaultWorkingDirectory)/simple_mlops_demo_for_iris-CI/iris_classifier/a/install-requirements.sh
+$(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a/install-requirements.sh
 
 Azure CLI Installation
 -----------------------
@@ -12,16 +12,27 @@ Deploy IRIS Model to Azure Container Instances
 ----------------------------------------------
 Set Working Directory 
 
-$(System.DefaultWorkingDirectory)/simple_mlops_demo_for_iris-CI/iris_classifier/a
+$(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a
 
-az ml model deploy -g $(ml.resourceGroup) -w $(ml.workspace) -n $(service_name) -f model.json --dc aciDeploymentConfig.yml --ic inferenceConfig.yml --description "IRIS Classifier deployed in ACI" --overwrite
+az ml model deploy -g $(ml.resourceGroup) -w $(ml.workspace) -n $(mlops_deploy_service) -f model.json --dc aciDeploymentConfig.yml --ic inferenceConfig.yml --description "IRIS Classifier deployed in ACI" --overwrite
 
 Execute Tests
 --------------
 Set Working Directory 
 
-$(System.DefaultWorkingDirectory)/simple_mlops_demo_for_iris-CI/iris_classifier/a
+$(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a
 
-pytest smoke_tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=integration_test --cov-report=xml --cov-report=html --scoreurl $(az ml service show -g $(ml.resourceGroup) -w $(ml.workspace) -n $(service_name) --query scoringUri -o tsv)
+pytest tests/smoke/smoke_tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=integration_test --cov-report=xml --cov-report=html --scoreurl $(az ml service show -g $(ml.resourceGroup) -w $(ml.workspace) -n $(mlops_deploy_service) --query scoringUri -o tsv)
 
 Publish Test Results
+
+AKS
+----
+
+Create AKS cluster
+------------------
+az ml computetarget create aks -g $(ml.resourceGroup) -w $(ml.workspace) -n $(aks.clusterName) -l eastus2 -s Standard_A2_v2 --verbose -a 1 --cluster-purpose DevTest
+
+Deploy model to AKS for Production
+-----------------------------------
+az ml model deploy --name $(service_name) -g $(ml.resourceGroup) -w $(ml.workspace) --ct $(aks.clusterName) -f model.json --ic inferenceConfig.yml --dc aksDeploymentConfig.yml --overwrite

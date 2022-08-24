@@ -1,0 +1,3 @@
+ml.workspace = simple_mlops_demo_workspace
+ml.servicename = mlops_deployment_service
+ml.resourceGroup = RG_Jaganlal
