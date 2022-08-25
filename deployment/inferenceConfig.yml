@@ -1,4 +1,4 @@
-entryScript: infer.py
+entryScript: inference/infer.py
 runtime: python
 condaFile: conda_dependencies.yml
 extraDockerfileSteps:
