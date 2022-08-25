@@ -5,6 +5,7 @@ import joblib
 #from sklearn.externals import joblib
 
 import math
+from azureml.core import Workspace
 from azureml.core.model import Model
 from azureml.monitoring import ModelDataCollector
 import json
@@ -27,9 +28,10 @@ def init():
     global model
     prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
-    model_path = Model.get_model_path(model_name='IRIS', _workspace='simple_mlops_demo_workspace')
-    print('Model Path:', model_path)
     try:
+        ws = Workspace.from_config()
+        model_path = Model.get_model_path(model_name='IRIS', _workspace=ws)
+        print('Model Path:', model_path)
         model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
         print('IRIS model loaded 1...')
     except:
