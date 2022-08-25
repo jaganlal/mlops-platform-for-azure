@@ -5,8 +5,7 @@ import joblib
 #from sklearn.externals import joblib
 
 import math
-from azureml.core import Workspace
-from azureml.core.model import Model
+from azureml.core import Model
 from azureml.monitoring import ModelDataCollector
 import json
 import re
@@ -29,19 +28,12 @@ def init():
     prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
     try:
-        ws = Workspace.from_config()
-        model_path = Model.get_model_path(model_name='IRIS', _workspace=ws)
+        model_path = Model.get_model_path(model_name='IRIS')
         print('Model Path:', model_path)
         model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
         print('IRIS model loaded 1...')
-    except:
-        print ('Model path is invalid - ', model_path)
-    
-    try:
-        model = joblib.load("./models/simple_iris_model.pkl")
-        print('IRIS model loaded 2...')
-    except:
-        print ('Model path is invalid - ./models/simple_iris_model.pkl')
+    except Exception as e:
+        print ('Exception 1:', e)
 
 def create_response(predicted_lbl):
     '''
