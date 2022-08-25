@@ -12,6 +12,9 @@ import traceback
 import logging
 from sklearn.tree import DecisionTreeClassifier
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
 '''
 Inference script for IRIS Classification:
 
@@ -24,7 +27,7 @@ def init():
     '''
     global prediction_dc
     global model
-    logging.setLevel(logging.DEBUG)
+    global logger
 
     prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
@@ -32,9 +35,9 @@ def init():
         model_path = Model.get_model_path(model_name='IRIS')
         logging.error('Model Path:', model_path)
         model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
-        logging.info('IRIS model loaded 1...')
+        logger.info('IRIS model loaded 1...')
     except Exception as e:
-        logging.error('Exception 1:', e)
+        logger.error('Exception 1:', e)
 
 def create_response(predicted_lbl):
     '''
@@ -44,8 +47,10 @@ def create_response(predicted_lbl):
     Returns :
         Response JSON object
     '''
+    global logger
+
     resp_dict = {}
-    logging.info("Predicted Species : ",predicted_lbl)
+    logger.info("Predicted Species : ",predicted_lbl)
     resp_dict["predicted_species"] = str(predicted_lbl)
     return json.loads(json.dumps({"output" : resp_dict}))
 
@@ -67,5 +72,6 @@ def run(raw_data):
         prediction_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
         return create_response(predicted_species)
     except Exception as err:
-        logging.error(err)
+        global logger
+        logger.error(err)
         traceback.print_exc()
