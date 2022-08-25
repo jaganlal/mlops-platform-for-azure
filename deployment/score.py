@@ -24,11 +24,13 @@ def init():
     '''
     global prediction_dc
     global model
+    logging.setLevel(logging.DEBUG)
+
     prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
     try:
         model_path = Model.get_model_path(model_name='IRIS')
-        logging.info('Model Path:', model_path)
+        logging.error('Model Path:', model_path)
         model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
         logging.info('IRIS model loaded 1...')
     except Exception as e:
