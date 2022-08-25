@@ -27,7 +27,7 @@ def init():
     global model
     prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
-    model_path = Model.get_model_path('IRIS')
+    model_path = Model.get_model_path(model_name='IRIS', _workspace='simple_mlops_demo_workspace')
     print('Model Path:', model_path)
     try:
         model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
