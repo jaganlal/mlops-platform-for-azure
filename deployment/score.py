@@ -31,10 +31,11 @@ def init():
 
     prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
-    logging.debug('Get Model Path')
+    logger.debug('Get Model Path')
     model_path = Model.get_model_path(model_name='IRIS')
-    logging.debug('Model Path:', model_path)
-    model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
+    logger.debug('Model Path:', model_path)
+    logger.info('Model Path:', model_path)
+    model = joblib.load(model_path)
     logger.debug('IRIS model loaded 1...')
 
 def create_response(predicted_lbl):
