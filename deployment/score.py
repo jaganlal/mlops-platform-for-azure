@@ -2,7 +2,6 @@ import os
 import sys
 import numpy as np
 import joblib
-#from sklearn.externals import joblib
 
 import math
 from azureml.core import Model
@@ -29,11 +28,11 @@ def init():
 
     try:
         model_path = Model.get_model_path(model_name='IRIS')
-        print('Model Path:', model_path)
+        logging.info('Model Path:', model_path)
         model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
-        print('IRIS model loaded 1...')
+        logging.info('IRIS model loaded 1...')
     except Exception as e:
-        print ('Exception 1:', e)
+        logging.error('Exception 1:', e)
 
 def create_response(predicted_lbl):
     '''
@@ -44,7 +43,7 @@ def create_response(predicted_lbl):
         Response JSON object
     '''
     resp_dict = {}
-    print("Predicted Species : ",predicted_lbl)
+    logging.info("Predicted Species : ",predicted_lbl)
     resp_dict["predicted_species"] = str(predicted_lbl)
     return json.loads(json.dumps({"output" : resp_dict}))
 
@@ -66,4 +65,5 @@ def run(raw_data):
         prediction_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
         return create_response(predicted_species)
     except Exception as err:
+        logging.error(err)
         traceback.print_exc()

@@ -1,5 +1,6 @@
 import requests
 import json
+import logging
 
 req_sample = {"SepalLengthCm": 6.6, "SepalWidthCm": 3, "PetalLengthCm": 4.4, "PetalWidthCm": 1.4}
 
@@ -18,3 +19,4 @@ def test_prediction(scoreurl):
     resp = requests.post(scoreurl, json=json.loads(json.dumps(req_sample)), headers=headers)
     resp_json = json.loads(resp.text)
     assert resp_json['output']['predicted_species'] == "1"
+    logging.info(resp)
