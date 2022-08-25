@@ -28,8 +28,18 @@ def init():
     prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
     model_path = Model.get_model_path('IRIS')
-    model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
-    print('IRIS model loaded...')
+    print('Model Path:', model_path)
+    try:
+        model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
+        print('IRIS model loaded 1...')
+    except:
+        print ('Model path is invalid - ', model_path)
+    
+    try:
+        model = joblib.load("./models/simple_iris_model.pkl")
+        print('IRIS model loaded 2...')
+    except:
+        print ('Model path is invalid - ./models/simple_iris_model.pkl')
 
 def create_response(predicted_lbl):
     '''
