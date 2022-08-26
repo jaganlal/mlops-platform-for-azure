@@ -64,6 +64,7 @@ def run(raw_data):
         Predicted IRIS Species
     '''
     try:
+        global logger
         logger.info('Request data:', raw_data)
         data = json.loads(raw_data)
         sepal_l_cm = data['SepalLengthCm']
