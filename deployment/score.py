@@ -26,11 +26,12 @@ def init():
     Initialize required models:
         Get the IRIS Model from Model Registry and load
     '''
-    global prediction_dc
+    global inputs_dc, prediction_dc
     global model
     global logger
 
-    prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
+    inputs_dc = ModelDataCollector("simple_iris_model", designation="inputs", feature_names=["SepalLengthCm","SepalWidthCm","PetalLengthCm","PetalWidthCm"])
+    prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["Predicted_Species"])
 
     # model_path = Model.get_model_path(model_name='simple_iris_model:1')
 
@@ -63,18 +64,25 @@ def run(raw_data):
     Returns :
         Predicted IRIS Species
     '''
+    global logger
     try:
-        # global logger
-        # logger.info('Request data:', raw_data)
+        logger.info('Request data:', raw_data)
         data = json.loads(raw_data)
         sepal_l_cm = data['SepalLengthCm']
         sepal_w_cm = data['SepalWidthCm']
         petal_l_cm = data['PetalLengthCm']
         petal_w_cm = data['PetalWidthCm']
+
+        # This call is saving our input data into Azure Blob
+        inputs_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
+
         predicted_species = model.predict([[sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm]])[0]
-        # prediction_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
+
+        # This call is saving our prediction data into Azure Blob
+        prediction_dc.collect(predicted_species)
+
         response = create_response(predicted_species)
-        # logger.info('Response:', response)
+        logger.info('Response:', response)
         return response
 
     except Exception as err:
