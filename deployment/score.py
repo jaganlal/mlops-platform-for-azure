@@ -30,7 +30,7 @@ def init():
     global model
     global logger
 
-    inputs_dc = ModelDataCollector("simple_iris_model", designation="inputs", feature_names=["SepalLengthCm","SepalWidthCm","PetalLengthCm","PetalWidthCm"])
+    inputs_dc = ModelDataCollector("simple_iris_model", designation="inputs", feature_names=["SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm"])
     prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["Predicted_Species"])
 
     # model_path = Model.get_model_path(model_name='simple_iris_model:1')
