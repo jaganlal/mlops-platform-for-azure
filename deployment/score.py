@@ -49,8 +49,6 @@ def create_response(predicted_lbl):
     Returns :
         Response JSON object
     '''
-    global logger
-
     resp_dict = {}
     logger.info("Predicted Species : ",predicted_lbl)
     resp_dict["predicted_species"] = str(predicted_lbl)
@@ -64,7 +62,6 @@ def run(raw_data):
     Returns :
         Predicted IRIS Species
     '''
-    global logger
     try:
         logger.info('Request data:', raw_data)
         data = json.loads(raw_data)
@@ -86,6 +83,5 @@ def run(raw_data):
         return response
 
     except Exception as err:
-        global logger
         logger.error(err)
         traceback.print_exc()
