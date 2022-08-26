@@ -29,11 +29,9 @@ def init():
     global model
     global logger
 
-    prediction_dc = ModelDataCollector("IRIS", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
+    prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
-    logger.debug('Get Model Path')
-    model_path = Model.get_model_path(model_name='IRIS')
-    logger.debug('Model Path:', model_path)
+    model_path = Model.get_model_path(model_name='simple_iris_model')
     logger.info('Model Path:', model_path)
     model = joblib.load(model_path)
     logger.debug('IRIS model loaded 1...')
