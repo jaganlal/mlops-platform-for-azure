@@ -64,8 +64,8 @@ def run(raw_data):
         Predicted IRIS Species
     '''
     try:
-        global logger
-        logger.info('Request data:', raw_data)
+        # global logger
+        # logger.info('Request data:', raw_data)
         data = json.loads(raw_data)
         sepal_l_cm = data['SepalLengthCm']
         sepal_w_cm = data['SepalWidthCm']
@@ -74,7 +74,7 @@ def run(raw_data):
         predicted_species = model.predict([[sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm]])[0]
         # prediction_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
         response = create_response(predicted_species)
-        logger.info('Response:', response)
+        # logger.info('Response:', response)
         return response
 
     except Exception as err:
