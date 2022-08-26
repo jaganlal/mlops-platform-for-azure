@@ -71,7 +71,7 @@ def run(raw_data):
         petal_w_cm = data['PetalWidthCm']
 
         # This call is saving our input data into Azure Blob
-        inputs_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
+        inputs_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm])
 
         predicted_species = model.predict([[sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm]])[0]
 
