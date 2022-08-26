@@ -11,10 +11,9 @@ az extension add -n azure-cli-ml
 Deploy IRIS Model to Azure Container Instances
 ----------------------------------------------
 Set Working Directory 
+$(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a/deployment
 
-$(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a
-
-az ml model deploy -g $(ml.resourceGroup) -w $(ml.workspace) -n $(mlops_deploy_service) -f model.json --dc aciDeploymentConfig.yml --ic inferenceConfig.yml --description "IRIS Classifier deployed in ACI" --overwrite
+az ml model deploy -g $(ml.resourceGroup) -w $(ml.workspace) -n mlops-deploy-service -f ../metadata/model.json --dc aciDeploymentConfig.yml --ic inferenceConfig.yml --description "IRIS Classifier deployed in ACI" --overwrite
 
 Execute Tests
 --------------
@@ -22,7 +21,7 @@ Set Working Directory
 
 $(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a
 
-pytest tests/smoke/smoke_tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=integration_test --cov-report=xml --cov-report=html --scoreurl $(az ml service show -g $(ml.resourceGroup) -w $(ml.workspace) -n $(mlops_deploy_service) --query scoringUri -o tsv)
+pytest tests/smoke/smoke_tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=integration_test --cov-report=xml --cov-report=html --scoreurl $(az ml service show -g $(ml.resourceGroup) -w $(ml.workspace) -n mlops-deploy-service --query scoringUri -o tsv)
 
 Publish Test Results
 
