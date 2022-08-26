@@ -4,7 +4,7 @@ import numpy as np
 import joblib
 
 import math
-from azureml.core.model import Model
+from azureml.core import Model
 from azureml.monitoring import ModelDataCollector
 import json
 import re
@@ -31,12 +31,12 @@ def init():
 
     prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
-    model_path = Model.get_model_path(model_name='simple_iris_model:1')
+    # model_path = Model.get_model_path(model_name='simple_iris_model:1')
 
-    # model_path = os.path.join(os.getenv('AZUREML_MODEL_DIR'), 'simple_iris_model.pkl')
+    model_path = os.path.join(os.getenv('AZUREML_MODEL_DIR'), 'models', 'simple_iris_model.pkl')
     logger.info('Model Path:', model_path)
-    # model = joblib.load(model_path)
-    model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
+    model = joblib.load(model_path)
+    # model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
     logger.debug('IRIS model loaded 1...')
 
 def create_response(predicted_lbl):
