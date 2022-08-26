@@ -70,6 +70,8 @@ def run(raw_data):
         petal_l_cm = data['PetalLengthCm']
         petal_w_cm = data['PetalWidthCm']
 
+        global inputs_dc, prediction_dc
+
         # This call is saving our input data into Azure Blob
         inputs_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm])
 
