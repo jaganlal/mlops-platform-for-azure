@@ -31,7 +31,7 @@ def init():
 
     prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["SepalLengthCm","SepalWidthCm", "PetalLengthCm","PetalWidthCm","Predicted_Species"])
 
-    model_path = Model.get_model_path(model_name='simple_iris_model:2')
+    model_path = Model.get_model_path(model_name='simple_iris_model:1')
 
     # model_path = os.path.join(os.getenv('AZUREML_MODEL_DIR'), 'simple_iris_model.pkl')
     logger.info('Model Path:', model_path)
