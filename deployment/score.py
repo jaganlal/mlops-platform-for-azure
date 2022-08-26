@@ -1,5 +1,6 @@
 import os
 import sys
+from urllib import response
 import numpy as np
 import joblib
 
@@ -37,7 +38,7 @@ def init():
     logger.info('Model Path:', model_path)
     model = joblib.load(model_path)
     # model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
-    logger.debug('IRIS model loaded 1...')
+    logger.info('IRIS model loaded...')
 
 def create_response(predicted_lbl):
     '''
@@ -63,14 +64,18 @@ def run(raw_data):
         Predicted IRIS Species
     '''
     try:
+        logger.info('Request data:', raw_data)
         data = json.loads(raw_data)
         sepal_l_cm = data['SepalLengthCm']
         sepal_w_cm = data['SepalWidthCm']
         petal_l_cm = data['PetalLengthCm']
         petal_w_cm = data['PetalWidthCm']
         predicted_species = model.predict([[sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm]])[0]
-        prediction_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
-        return create_response(predicted_species)
+        # prediction_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm,predicted_species])
+        response = create_response(predicted_species)
+        logger.info('Response:', response)
+        return response
+
     except Exception as err:
         global logger
         logger.error(err)
