@@ -1,3 +1,4 @@
-ml.workspace = simple_mlops_demo_workspace
-ml.servicename = mlops_deployment_service
+ml.computeName = simple-mlops-demo-for-iris
+ml.region = centralus
 ml.resourceGroup = RG_Jaganlal
+ml.workspace = simple_mlops_demo_workspace

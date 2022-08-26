@@ -46,3 +46,5 @@ Contents :
 **/tests/smoke/*
 **/outputs/prediction.csv
 
+Publish Pipeline Artifact
+---------------------------

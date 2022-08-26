@@ -1,8 +1,10 @@
-Use Python 3.6
+Use Python 3.x
 ---------------
-Install Requirements
---------------------
-$(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a/install-requirements.sh
+3.x
+
+Install python dependencies
+---------------------------
+$(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a/environment_setup/install-requirements.sh
 
 Azure CLI Installation
 -----------------------
@@ -15,15 +17,18 @@ $(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a/deploy
 
 az ml model deploy -g $(ml.resourceGroup) -w $(ml.workspace) -n mlops-deploy-service -f ../metadata/model.json --dc aciDeploymentConfig.yml --ic inferenceConfig.yml --description "IRIS Classifier deployed in ACI" --overwrite
 
-Execute Tests
---------------
+Smoke Test
+----------
 Set Working Directory 
-
 $(System.DefaultWorkingDirectory)/_simple-mlops-demo-CI/iris_classifier/a
 
 pytest tests/smoke/smoke_tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=integration_test --cov-report=xml --cov-report=html --scoreurl $(az ml service show -g $(ml.resourceGroup) -w $(ml.workspace) -n mlops-deploy-service --query scoringUri -o tsv)
 
 Publish Test Results
+--------------------
+
+TODOs
+-----
 
 AKS
 ----
