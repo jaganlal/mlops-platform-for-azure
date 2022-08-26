@@ -6,7 +6,7 @@ import joblib
 
 import math
 from azureml.core import Model
-from azureml.monitoring import ModelDataCollector
+# from azureml.monitoring import ModelDataCollector
 import json
 import re
 import traceback
@@ -26,20 +26,19 @@ def init():
     Initialize required models:
         Get the IRIS Model from Model Registry and load
     '''
-    global inputs_dc, prediction_dc
+    # global inputs_dc, prediction_dc
     global model
     global logger
 
-    inputs_dc = ModelDataCollector("simple_iris_model", designation="inputs", feature_names=["SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm"])
-    prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["Predicted_Species"])
+    # inputs_dc = ModelDataCollector("simple_iris_model", designation="inputs", feature_names=["SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm"])
+    # prediction_dc = ModelDataCollector("simple_iris_model", designation="predictions", feature_names=["Predicted_Species"])
 
     # model_path = Model.get_model_path(model_name='simple_iris_model:1')
 
     model_path = os.path.join(os.getenv('AZUREML_MODEL_DIR'), 'models', 'simple_iris_model.pkl')
     logger.info('Model Path:', model_path)
     model = joblib.load(model_path)
-    # model = joblib.load(model_path+"/"+"simple_iris_model.pkl")
-    logger.info('IRIS model loaded...')
+    logger.info('simple_iris_model loaded...')
 
 def create_response(predicted_lbl):
     '''
@@ -70,15 +69,13 @@ def run(raw_data):
         petal_l_cm = data['PetalLengthCm']
         petal_w_cm = data['PetalWidthCm']
 
-        global inputs_dc, prediction_dc
-
         # This call is saving our input data into Azure Blob
-        inputs_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm])
+        # inputs_dc.collect([sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm])
 
         predicted_species = model.predict([[sepal_l_cm,sepal_w_cm,petal_l_cm,petal_w_cm]])[0]
 
         # This call is saving our prediction data into Azure Blob
-        prediction_dc.collect(predicted_species)
+        # prediction_dc.collect(predicted_species)
 
         response = create_response(predicted_species)
         logger.info('Response:', response)
