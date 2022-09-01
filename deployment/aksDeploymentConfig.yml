@@ -1,4 +1,4 @@
-computeType: AKS
+computeType: aks
 autoScaler:
     autoscaleEnabled: True
     minReplicas: 1

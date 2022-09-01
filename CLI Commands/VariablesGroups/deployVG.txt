@@ -1,3 +1,5 @@
+ml.aksComputeVMSize = STANDARD_D4A_V4
+ml.aksClusterName = iris-cluster
 ml.computeName = simple-mlops-demo-for-iris
 ml.region = centralus
 ml.resourceGroup = RG_Jaganlal

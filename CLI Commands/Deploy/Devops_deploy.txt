@@ -35,8 +35,8 @@ AKS
 
 Create AKS cluster
 ------------------
-az ml computetarget create aks -g $(ml.resourceGroup) -w $(ml.workspace) -n $(aks.clusterName) -l eastus2 -s Standard_A2_v2 --verbose -a 1 --cluster-purpose DevTest
+az ml computetarget create aks -g $(ml.resourceGroup) -w $(ml.workspace) -n $(ml.aksClusterName) -l $(ml.region) -s $(ml.aksComputeVMSize) --verbose -a 1 --cluster-purpose DevTest
 
 Deploy model to AKS for Production
 -----------------------------------
-az ml model deploy --name $(service_name) -g $(ml.resourceGroup) -w $(ml.workspace) --ct $(aks.clusterName) -f model.json --ic inferenceConfig.yml --dc aksDeploymentConfig.yml --overwrite
+az ml model deploy --name mlops-aks-service -g $(ml.resourceGroup) -w $(ml.workspace) --ct $(ml.aksClusterName) -f ../metadata/model.json --ic inferenceConfig.yml --dc aksDeploymentConfig.yml --overwrite
