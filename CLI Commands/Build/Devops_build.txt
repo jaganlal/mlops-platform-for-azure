@@ -28,7 +28,7 @@ mkdir metadata && mkdir models
 
 Model Training
 -------------
-az ml run submit-script -g $(ml.resourceGroup) -w $(ml.workspace) -e $(ml.experimentName) --ct $(ml.computeName) -c train --source-directory . --path environment_setup -t ./metadata/run.json train.py --container_name irisdata --input_csv Iris.csv --model_path ./models/simple_iris_model.pkl --artifact_loc ./outputs/models/ --dataset_name iris_ds --dataset_desc "IRIS Data Set"
+az ml run submit-script -g $(ml.resourceGroup) -w $(ml.workspace) -e $(ml.experimentName) --ct $(ml.computeName) -c train --source-directory . --path environment_setup -t ./metadata/run.json train.py --container_name irisdata --input_csv iris.csv --model_path ./models/simple_iris_model.pkl --artifact_loc ./outputs/models/ --dataset_name iris_ds --dataset_desc "IRIS Data Set"
 
 Register Model in to Model Registry
 ------------------------------------

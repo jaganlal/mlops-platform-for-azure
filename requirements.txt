@@ -1,0 +1,10 @@
+pandas
+numpy
+joblib
+requests
+azureml-core
+azure-cli
+azureml-sdk[cli]
+pytest
+pytest-cov
+sklearn
